@@ -6,10 +6,11 @@ namespace TitanicSurvival.Web.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        private readonly PredictorService _predictorService;
+        public IndexModel(ILogger<IndexModel> logger, PredictorService predictorService)
         {
             _logger = logger;
+            _predictorService = predictorService;
         }
 
         [BindProperty]
@@ -23,9 +24,7 @@ namespace TitanicSurvival.Web.Pages
 
         public IActionResult OnPost()
         {
-            // Placeholder: Use the ML model to predict survival here.
-            bool isSurvived = (Age < 10 && Sex == "female") || (TicketClass == 1 && Age < 30); // Temporary logic
-
+           var isSurvived=_predictorService.CanSurvive(new Passenger { Age = Age, Sex = Sex, TicketClass = TicketClass });
             TempData["IsSurvived"] = isSurvived;
             TempData["Message"] = isSurvived ? "Survived!" : "Did not survive.";
 
