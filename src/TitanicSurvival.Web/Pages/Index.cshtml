@@ -1,0 +1,48 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container mt-5">
+    <h2>Enter Passenger Details</h2>
+
+    @if (TempData["Message"] != null && TempData["IsSurvived"] != null)
+    {
+        var isSurvived = (bool)(TempData["IsSurvived"] ?? false);
+        <div class="alert @((isSurvived ? "alert-success" : "alert-danger"))">
+            @TempData["Message"]
+        </div>
+    }
+
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="Age" class="form-label"></label>
+            <input asp-for="Age" class="form-control" min="0" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Sex" class="form-label"></label>
+            <select asp-for="Sex" class="form-select">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <span asp-validation-for="Sex" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TicketClass" class="form-label"></label>
+            <select asp-for="TicketClass" class="form-select">
+                <option value="1">1st Class</option>
+                <option value="2">2nd Class</option>
+                <option value="3">3rd Class</option>
+            </select>
+            <span asp-validation-for="TicketClass" class="text-danger"></span>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
